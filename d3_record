@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="js/d3.min.js"></script>
+</head>
+<body>
+  <div id="dd"></div>
+    <div id="dd"></div>
+    <div id="dd"></div>
+    <div id="dd"></div>
+</body>
+</html>
+<script type="text/javascript">
+    var death = [['SunMoonLight', 44], ['ISIS', 33], ['French', 12], ['Mars', 11]];
+    var root = d3.select('body').selectAll("div").data(death);
+    var div_set = root.enter().append('div'); //為沒有物件可配對的資料,建立標籤
+    root.exit().remove(); //刪除沒資料可配對的物件
+    root.text(function (item, i) {
+        console.log(item);
+        return i + " / " + item[0];
+    });
+</script>
+<!--
+    前言:
+     D3.js 的基礎不是在視覺化，而是資料與物件的結合
+    
+    Function功能:
+    元素選取:
+    d3.select('DOM'):選取元素
+    d3.select('body').select('div').select('span'):指定選取內層元素
+    d3.select('body').selectAll('div'):取得body內所有div元素
+
+
+    資料綁定:
+    d3.select('body').selectAll('div').data(source):source代表資料來源,data為Binding方法
+    root.text()//以迴圈形式遍歷root資料並顯示
+
+    元素過濾:
+    ===============append 幫我們建立標籤物件給資料配對，而 remove 則移除掉多餘的標籤。===============
+    var root=d3.select('body').selectAll('div').data(source) //先載入資料
+    var div_set=root.enter().append('div') ///*為「沒有物件可配對的資料」建立標籤 */
+    root.exit().remove() ///* 刪除「沒有資料可配對的物件」*/
+        
+    參數帶入式:
+    div_set=function(item,index)
+    {
+        return value;
+    }
+    設定參數時可以代入函式，參數的值會用函式執行的結果來設定」。而傳入函式的參數則會是各筆資料 d 與資料的順序 i 
+    -->
