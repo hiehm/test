@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="../js/d3.min.js"></script>
+</head>
+<body>
+   <svg width="100%" height="1000px"></svg>
+</body>
+</html>
+<script type="text/javascript">        
+    for (var i = 0, data = []; i < 100; i++) data.push([Math.random() * 1280, Math.random() * 860]);
+        var voronoi = d3.geom.voronoi();
+        var polygons = voronoi(data);            
+        var d_set = d3.select('svg').selectAll('path').data(polygons); //指定資料寫入元素位置
+        var path = d_set.enter().append('path');
+        path.attr({
+            d: function (it) { return "M" + it.join("L") + "Z"; },
+            fill: 'none',
+            stroke: 'black'
+        });        
+</script>
+<!--
+    Voronoi製作流程
+    1.準備多個點給予d3.geom.voronoi物件
+    2.d3.geom.voronoi傳回一組多邊形,對應到每個點,表示該多邊形範圍內的最近點
+    3.voronoi(source)將資料代入voronoi物件
+    4.select指定代入voronoi元素
+    5.path生成HTML資料元素
+    6.attr設定元素樣式
+-->
