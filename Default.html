@@ -1,308 +1,70 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" ng-app="demo">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta content="Design By Matt" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-    <script src="JS/angular.min.js"></script>
-    <style type="text/css">
-        body {
-            background-color: #f6f0d1;
-        }
-
-        label {
-            font-size: 32px;
-        }
-
-        p, details {
-            letter-spacing: 3px;
-            color: #414040;
-            line-height: 20px;
-            max-width: 90%;
-            margin-left: 20px;
-        }
-
-        .description {
-            color: #0094ff;
-        }
-    </style>
+    <script src="js/d3.min.js"></script>
 </head>
 <body>
-    <div>
-        <label>
-            <input type="radio" name="Teach" value="0" ng-model="rChoose" />
-            <span>Foreword & Concept</span>
-        </label>
-        <label>
-            <input type="radio" name="Teach" value="1" ng-model="rChoose" />
-            <span>Ng-Directive</span>
-        </label>
-        <label>
-            <input type="radio" name="Teach" value="2" ng-model="rChoose" />
-            <span>Filter & Event</span>
-        </label>
-    </div>
-    <div ng-switch on="rChoose" style="margin-top:10px;">
-        <div ng-switch-when="0">
-            <details>
-                <summary><strong>前言:</strong></summary>
-                <p>
-                    讓開發 Web 前端應用程式的過程中，完全排除手動操作 DOM 物件的機會，徹底做到「關注點分離」，強迫你必須抽象思考，用更加靈活的方式解決問題。
-                    更加難能可貴的地方在於，用這種嶄新的開發架構，並不會犧牲效能與增加開發複雜度，反而得到的是高效能與徹底降低開發的複雜度等優點！
-                </p>
-            </details>
-            <details>
-                <summary><strong>概念:</strong></summary>
-                <p>
-                    AngularJS框架核心概念是MVC(Model-View-Controller)或MVVM(Mode-View-ViewModel),主要為<strong>邏輯單元&關注點分離的一種開發方式</strong><br />
-                    Model=資料、View=UI、Controller=工作邏輯,盡可能與其他單元分開,讓程式碼更加模組化、重用性(reusable)易維護。
-                    AngularJS採取宣告性質編譯方式,讓人更容易編寫與理解應用程式,可以輕易觀看HTML內容與Controller來了解程式意圖<br />
-                </p>
-            </details>
-            <details>
-                <summary><strong>AngularJS的六大理念</strong></summary>
-                <p>
-                    <ul>
-                        <li>
-                            <h4>資料綁定(data-binding)</h4>
-                            JQuery以直觀性方式找尋元素(DOM)並修改其內容值,屬於單向綁定(one-way-binding)<br />
-                            <strong class="description">$('#DOM').value(text)</strong><br />
-                            AngularJS作法以資料面(Model)來進行,每當資料發生變化時會自行處理相關UI的內容更新,屬於雙向綁定(two-way-binding)<br />
-                            <strong class="description" ng-non-bindable>< input type="text" ng-model="Demo" />{{Demo}}</strong>
-                        </li>
-                        <li>
-                            <h4>宣告性(Declarative)</h4>
-                            HTML延伸加入NG屬性,透過AngularJS裡一些Directives(指令)來達成
-                        </li>
-                        <li>
-                            <h4>關注點分離</h4>
-                            Model:大部分為純資料,使用JSON物件呈現<br />
-                            View:使用者觀看與互動而最終描繪的HTML內容<br />
-                            Controller:不直接引用到View,固Controller與View彼此是獨立,也不須實體化
-                        </li>
-                        <li>
-                            <h4>相依性注入(Dependency Injection)</h4>
-                            索取Controller或Service(服務)的相依性內容之概念，而非使用new運算子做實體化或明顯呼叫函式來生成實體<br />
-                            程式碼部分轉為負責(Injector),這樣的做法可以讓處理某段程式碼之前，馬上就可以知道我們需要什麼
-                            <div class="description">
-                                angularjs.controller("ctrlA",["$scope","$log",function(scope,log){}])<br />
-                                $scope、$log都算是服務透過Injection方式,給予Controller內部使用,並變換名稱
-                            </div>
-                        </li>
-                        <li>
-                            <h4>擴展(Extension)</h4>
-                            可建立自訂的Directive Template(樣式範本),結合第三方套件如JQueryUI、BootStrap並給予HTML直接套用
-                        </li>
-                        <li>
-                            <h4>單元測試(Unit Test)</h4>
-                            AngularJS每個小單元都設計成可測試,從controller、services、directives、views、routes<br />
-                            可使用快速測試執行器(Karam)進行,http://karma-runner.github.io
-                        </li>
-                    </ul>
-                </p>
-            </details>
-        </div>
-        <div ng-switch-when="1">
-            <label><b>Ng-model & Ng-Bind</b></label><br />
-            <input type="text" ng-model="MyVar" placeholder="請輸入值" /><br />
-            <div class="description">
-                {{MyVar}} <span ng-non-bindable>←{{MyVar}}</span><br />
-                <span ng-bind="MyVar"></span>←ng-bind='MyVar'
-            </div>
-            <p>
-                { {Variable} } 雙大括號綁定表達式,等同於Ng-bind
-                使用Ng-bind可防止失敗時看到{ {variable樣式} }
-            </p>
-            <hr />
-            <label><b>Ng-Init & Ng-Repeat</b></label>
-            <input type="hidden" ng-init="InitObj=['100','MATT','WuZizi']" />
-            <div class="description">
-                <ul>
-                    <li ng-repeat="obj in InitObj">第{{$index+1}}筆,資料:{{obj}}</li>
-                </ul>
-            </div>
-            <p>
-                Ng-Init:初始化一個表達示(expression)，可宣告一組集合物件<br />
-                Ng-Repeat:以迴圈方式讀取一個陣列或集合物件<br />
-                └State(狀態詞表現): $index、$first、$middle、$last、$even、$odd
-            </p>
-            <hr />
-            <label><b>Ng-Show & Ng-If</b></label>
-            <div><input type="checkbox" ng-model="CheckValue" /><span>請勾我</span></div>
-            <div class="description">
-                <span ng-show="CheckValue">ng-show="CheckValue"打勾時顯示</span>
-                <span ng-if="CheckValue==false">ng-if="CheckValue==false"不打勾時顯示</span>
-            </div>
-            <p>
-                Ng-If:條件成立時顯示<br />
-                Ng-Show:控制元素顯示與隱藏,以true/false為值
-            </p>
-            <hr />
-            <label><b>Ng-Options</b></label>
-            <div>
-                <input type="hidden" ng-init="ArrayObj=['MATT','105','Jack','LLL']" />
-                <span>單一陣列 {{ArrayObj}}</span>
-                <select ng-model="selA" ng-options="m for m in ArrayObj">
-                    <option value="">--請選擇</option>
-                </select>
-                <div class="description">
-                    selA的值:{{selA}}
-                </div>
-                <p>
-                    label for value in source
-                    label:表示在option顯示出來的text部份
-                    for value:從資料來源取得單一model(Single Object)
-                    in array:表示資料來源,(陣列、集合物件、巢狀物件)
-                </p>
-            </div>
-            <div>
-                <span>集合物件-置換option value</span>
-                <input type="hidden" ng-init="CollectObj=[{id:'M001',Name:'MATT',Alias:'老山',SexCategory:'男'},{id:'F001',Name:'Susan',Alias:'妙義',SexCategory:'女'}]" />
-                <select ng-model="selB" ng-options="('('+m.Alias+') '+m.Name) for m in CollectObj track by m.id">
-                    <option value="">--請選擇</option>
-                </select>
-                <div class="description">
-                    selB的物件:{{selB}}
-                </div>
-                <p>
-                    label for value in source track by column
-                    label:表示在option顯示出來的text部份
-                    for value:從資料來源取得單一model(Single Object)
-                    in source:表示資料來源,(陣列、集合物件、巢狀物件)
-                    track by:置換value值的欄位設定
-                </p>
-            </div>
-        </div>
-        <div ng-switch-when="2">
-            <details ng-init="names=['Matt','Mary','Taco','Jack','Timothy','WuZiZi']">
-                <summary>Filter</summary>
-                <strong><b>模糊搜尋</b></strong>
-                <div>
-                    <input type="text" ng-model="Cond" />
-                    <div class="description">
-                        <strong ng-non-bindable>{{var|filter:Cond as C}} 加入filter服務</strong><br />
-                        原始資料: {{names}}<br />
-                        Filter: {{names|filter:Cond}}
-                    </div>
-                </div>
-                <hr />
-                <strong><b>列表過濾</b></strong>
-                <div class="description">
-                    <ul ng-repeat="name in names|filter:Cond as result">
-                        <li>{{name}}</li>
-                    </ul>
-                </div>
-                <hr />
-                <strong><b>特有後綴詞過濾(var|filter)</b></strong>
-                <div>
-                    <textarea ng-model="txtName"></textarea>
-                    <div class="description">
-                        Uppercase(大寫):<strong ng-bind="(txtName|uppercase)"></strong><br />
-                        lowercase(小寫):<strong ng-bind="(txtName|lowercase)"></strong>
-                    </div>
-                </div>
-            </details>
-            <details>
-                <summary>Event</summary>
-                <strong><b>ng-click</b></strong>
-                <div>
-                    <input type="button" ng-click="clickName='MATT'" value="Click" />                    
-                    <div class="description">
-                        輸出結果:{{clickName}}
-                    </div>
-                </div>     
-                <hr />
-                <strong><b>ng-change</b></strong>          
-                <div ng-controller="wel">      
-                    <input type="hidden" ng-init="count=0" />             
-                    <input type="checkbox" ng-model="changeName" ng-change="count=100" />
-                    <div class="description">
-                        輸出結果:{{count}}
-                    </div>
-                </div>
-            </details>
-        </div>
-    </div>
+  <div id="divD3"></div>
 </body>
 </html>
 <script type="text/javascript">
-    var app = angular.module("demo", []).controller("wel", ["$scope", function (sc) {
-        sc.counter = 0;
-        sc.change = function () {
-            sc.counter += 1;
-        }
-    }]);    
+    //var death = [['SunMoonLight', 44], ['ISIS', 33], ['French', 12], ['Mars', 11]];
+    //var root = d3.select('body').selectAll("div").data(death);
+    //var div_set = root.enter().append('div'); //為沒有物件可配對的資料,建立標籤
+    //root.exit().remove(); //刪除沒資料可配對的物件
+    //root.text(function (d, i) {
+    //    //console.log(item);
+    //    return i + " / " + d[0];
+    //});
+    var death_rate = [['越南', 24.26], ['阿魯巴', 17.48], ['關島', 10.01], ['澳門', 5.84]];
+    var div_data_bind = d3.select("#divD3").selectAll("div").data(death_rate);
+    var div_set = div_data_bind.enter().append("div");
+    div_data_bind.exit().remove();
+    div_set.text(function (d, i) {
+        return i + " / " + d[0];
+    });
+    div_set.style("height", "20px");
+    div_set.style("background", "red");
+    div_set.style("margin", "5px");
+    div_set.style("width", function (d, i) {
+        return (d[1] * 10) + "px";
+    });
 </script>
 <!--
     前言:
-    讓開發 Web 前端應用程式的過程中，完全排除手動操作 DOM 物件的機會，徹底做到「關注點分離」，強迫你必須抽象思考，用更加靈活的方式解決問題。
-    更加難能可貴的地方在於，用這種嶄新的開發架構，並不會犧牲效能與增加開發複雜度，反而得到的是高效能與徹底降低開發的複雜度等優點！
+     D3.js 的基礎不是在視覺化，而是資料與物件的結合
+    
+    Function功能:
+    元素選取:
+    d3.select('DOM'):選取元素
+    d3.select('body').select('div').select('span'):指定選取內層元素
+    d3.select('body').selectAll('div'):取得body內所有div元素
 
-    常用前綴詞(Ng-Directive):
-    1.Ng-App:定義此範圍內的元素都包含Angular運用或Module的運用
+    資料綁定:
+    d3.select('body').selectAll('div').data(source):source代表資料來源,data為Binding方法
+    root.text()//以迴圈形式遍歷root資料並顯示
 
-    2.Ng-Model:定義一個變數名稱且此變數可在頁面上引用
+    元素過濾:
+    ===============append 幫我們建立標籤物件給資料配對，而 remove 則移除掉多餘的標籤。===============
+    var root=d3.select('body').selectAll('div').data(source) //先載入資料
+    var div_set=root.enter().append('div') ///*為「沒有物件可配對的資料」建立標籤 */
+    root.exit().remove() ///* 刪除「沒有資料可配對的物件」*/
+        
+    Dynamic參數帶入式:
+    div_set=function(item,index)
+    {
+        return value;
+    }
+    設定參數時可以代入函式，參數的值會用函式執行的結果來設定」。而傳入函式的參數則會是各筆資料 d 與資料的順序 i 
 
-    3.Ng-Bind:綁定一個NG變數
-
-    4.Ng-non-bindable:原始碼呈現宣告
-
-    5.Ng-Init:初始化一個表達示(expression)，可宣告一組集合物件
-
-    6.Ng-Repeat:以迴圈方式讀取一個陣列或集合物件
-
-    7.Ng-If:條件成立時顯示
-
-    8.Ng-Show:控制元素顯示與隱藏,以true/false為值
-
-    9.Ng-Options:對資料來源進行遍歷載入元素,主要運用於Select元素
-                 針對兩種資料型態Array、Object劃分,幾種條件寫入語法
-                 A.label for value in array
-                   label:表示在option顯示出來的text部份
-                   for value:從資料來源取得單一model(Single Object)
-                   in array:表示資料來源,(陣列、集合物件、巢狀物件)
-
-                 B.label group by groupAttr for value in array
-                   group by groupAttr:表示使用value中的指定屬性進行群組
-
-                 C.label group by groupAttr for value in array track by trackAttr:
-                   track by trackAttr:表示使用value中的指定屬性值,置換掉option中的value值
-
-    10.Ng-Swich:多條件篩選方式
-          └Ng-Swich on:綁定指定ng-model變數,當成資料來源
-
-    11.Ng-Controoler:AngularJS 的語法，主要用來綁定 View（HTML）和 Model（JS）的連結，
-                    以建立 View 和 Model 的關係。其遵循 MVC（Model–View–Controller）框架，
-                    可以透過 Controller 來處理 Model 和 View 之間的綁定。若在 Controller 中進行修改，
-                    異動也會反應到 View 中，達到 AngularJS 的雙向資料綁定（Two Way Data-Binding）。
-
-    過濾&事件(filter & Event)
-    1.filter:資料過濾與轉換
-        A.模糊搜尋
-        B.列表過濾
-        C.特有後綴詞過濾
-
-    2.Event:
-      ng-blur
-      ng-focus
-      ng-copy
-      ng-paste
-      ng-cut
-      ng-change
-      ng-checked
-      ng-click
-      ng-dbclick
-      ng-keydown
-      ng-keypress
-      ng-keyup
-      ng-mousedown
-      ng-mouseenter
-      ng-mouseleave
-      ng-mousemove
-      ng-mouseover
-      ng-mouseup
-
-    關注點分離要點:
-    於View之中宣告ng-init=value 、 ng-model=value,並不是一種好的做法
-    容易造成維護困難,資料變換的邏輯應寫於Controller之中    
--->
+    樣式設定:
+    div_set.style("height", "20px");
+    div_set.style("background", "red");
+    div_set.style("margin", "5px");
+    div_set.style("width", function(d,i) {
+        return (d[1] * 10)+"px";
+    });
+    只要設定寬度、高度與背景顏色就可以做到囉：    
+    -->
